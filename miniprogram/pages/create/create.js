@@ -1,4 +1,5 @@
 const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
@@ -233,6 +234,37 @@ Page({
       return
     }
 
+    const formData = this.data.formData
+    const typeMap = {
+      wheel: '大转盘',
+      grid: '九宫格',
+      scroll: '随机滚动',
+      oneclick: '一键开奖'
+    }
+    const newLottery = {
+      id: Date.now(),
+      title: formData.title,
+      cover: formData.cover,
+      prizeName: formData.prizes.length > 0 ? formData.prizes[0].name : '神秘大奖',
+      participants: 0,
+      maxParticipants: formData.maxParticipants,
+      endTime: `${formData.endDate} ${formData.endTime}`,
+      type: formData.type,
+      typeName: typeMap[formData.type] || '大转盘',
+      status: 'ongoing',
+      isPublic: formData.isPublic,
+      joinType: formData.joinType,
+      prizes: formData.prizes,
+      description: formData.description,
+      joinLimit: formData.joinLimit,
+      startTime: `${formData.startDate} ${formData.startTime}`
+    }
+
+    if (!app.globalData.createdLotteries) {
+      app.globalData.createdLotteries = []
+    }
+    app.globalData.createdLotteries.unshift(newLottery)
+
     util.showLoading('发布中...')
     
     setTimeout(() => {
@@ -241,7 +273,7 @@ Page({
       
       setTimeout(() => {
         wx.navigateTo({
-          url: `/pages/preview/preview?data=${encodeURIComponent(JSON.stringify(this.data.formData))}`
+          url: `/pages/preview/preview?data=${encodeURIComponent(JSON.stringify(formData))}`
         })
       }, 1500)
     }, 1500)

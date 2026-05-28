@@ -2,7 +2,8 @@ App({
   globalData: {
     userInfo: null,
     systemInfo: null,
-    baseUrl: 'https://api.example.com'
+    baseUrl: 'https://api.example.com',
+    createdLotteries: []
   },
 
   onLaunch() {

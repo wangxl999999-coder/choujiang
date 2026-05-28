@@ -86,7 +86,7 @@
   <view class="lottery-list">
     <view 
       class="lottery-card" 
-      wx:for="{{lotteryList}}" 
+      wx:for="{{filteredList}}" 
       wx:key="id"
       data-id="{{item.id}}"
       bindtap="goToLottery"
@@ -126,7 +126,7 @@
     </view>
   </view>
 
-  <view class="empty-state" wx:if="{{lotteryList.length === 0 && !loading}}">
+  <view class="empty-state" wx:if="{{filteredList.length === 0 && !loading}}">
     <image src="/images/empty.png" mode="aspectFit" />
     <text>暂无抽奖活动</text>
   </view>

@@ -1,5 +1,6 @@
 const util = require('../../utils/util.js')
 const { mockBanners, mockLotteries } = require('../../utils/mock.js')
+const app = getApp()
 
 Page({
   data: {
@@ -29,12 +30,19 @@ Page({
   },
 
   onLoad() {
+    this._loaded = false
     this.loadBanners()
     this.loadLotteryList()
     this.startCountdown()
+    this._debounceFilter = util.debounce(() => {
+      this.filterList()
+    }, 300)
   },
 
   onShow() {
+    if (this._loaded) {
+      this.refreshLotteryList()
+    }
     this.updateRemainTime()
   },
 
@@ -59,11 +67,16 @@ Page({
     this.setData({ banners: mockBanners })
   },
 
+  getAllLotteries() {
+    const createdLotteries = app.globalData.createdLotteries || []
+    return [...createdLotteries, ...mockLotteries]
+  },
+
   loadLotteryList() {
     this.setData({ loading: true })
     return new Promise(resolve => {
       setTimeout(() => {
-        const list = mockLotteries.map(item => ({
+        const list = this.getAllLotteries().map(item => ({
           ...item,
           remainTime: util.getRemainTime(item.endTime).text
         }))
@@ -72,9 +85,25 @@ Page({
           loading: false 
         })
         this.filterList()
+        this._loaded = true
         resolve()
       }, 500)
     })
+  },
+
+  refreshLotteryList() {
+    const allLotteries = this.getAllLotteries()
+    const currentIds = this.data.lotteryList.map(item => item.id)
+    const hasNew = allLotteries.some(item => !currentIds.includes(item.id))
+
+    if (hasNew) {
+      const list = allLotteries.map(item => ({
+        ...item,
+        remainTime: util.getRemainTime(item.endTime).text
+      }))
+      this.setData({ lotteryList: list })
+      this.filterList()
+    }
   },
 
   loadMore() {
@@ -92,9 +121,7 @@ Page({
 
   onSearchInput(e) {
     this.setData({ searchKeyword: e.detail.value })
-    util.debounce(() => {
-      this.filterList()
-    }, 300)()
+    this._debounceFilter()
   },
 
   onSearch() {
