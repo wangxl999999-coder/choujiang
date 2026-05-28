@@ -1,0 +1,141 @@
+.my-lottery-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.status-tabs {
+  display: flex;
+  background: #fff;
+  padding: 0 20rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.status-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 4rpx solid transparent;
+  transition: all 0.3s;
+}
+
+.status-tab.active {
+  color: #ff6b6b;
+  border-bottom-color: #ff6b6b;
+  font-weight: 500;
+}
+
+.tab-count {
+  font-size: 22rpx;
+  margin-left: 4rpx;
+}
+
+.lottery-list {
+  padding: 20rpx 30rpx;
+}
+
+.lottery-item {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.lottery-cover {
+  width: 200rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+}
+
+.lottery-info {
+  flex: 1;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lottery-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+}
+
+.lottery-prize {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #ff6b6b;
+}
+
+.prize-name {
+  margin-left: 8rpx;
+}
+
+.lottery-meta {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.lottery-status {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.status-tag {
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.status-ongoing {
+  background: rgba(82, 196, 26, 0.1);
+  color: #52c41a;
+}
+
+.status-upcoming {
+  background: rgba(250, 173, 20, 0.1);
+  color: #faad14;
+}
+
+.status-finished {
+  background: rgba(153, 153, 153, 0.1);
+  color: #999;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.empty-btn {
+  padding: 20rpx 60rpx;
+  font-size: 28rpx;
+}
+
+.btn.empty-btn::after {
+  border: none;
+}

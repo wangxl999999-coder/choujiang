@@ -1,0 +1,74 @@
+<view class="preview-page">
+  <view class="preview-card">
+    <image class="preview-cover" src="{{formData.cover || 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400'}}" mode="aspectFill" />
+    <view class="preview-info">
+      <view class="preview-title">{{formData.title || '活动标题'}}</view>
+      <view class="preview-type">
+        <text class="type-tag">{{typeName}}</text>
+      </view>
+      <view class="preview-desc">{{formData.description || '暂无活动描述'}}</view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="section-title">奖品设置</view>
+    <view class="prize-list">
+      <view class="prize-item" wx:for="{{formData.prizes}}" wx:key="id">
+        <text class="prize-icon">{{item.icon}}</text>
+        <view class="prize-info">
+          <text class="prize-name">{{item.name}}</text>
+          <text class="prize-count">数量：{{item.count}}份</text>
+        </view>
+        <text class="prize-prob">{{item.probability}}%</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="section-title">参与方式</view>
+    <view class="join-info">
+      <text class="join-icon">{{joinIcon}}</text>
+      <view class="join-text">
+        <text class="join-name">{{joinName}}</text>
+        <text class="join-desc">{{joinDesc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="section-title">时间设置</view>
+    <view class="time-list">
+      <view class="time-item">
+        <text class="time-label">开始时间</text>
+        <text class="time-value">{{formData.startDate}} {{formData.startTime}}</text>
+      </view>
+      <view class="time-item">
+        <text class="time-label">结束时间</text>
+        <text class="time-value">{{formData.endDate}} {{formData.endTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-section">
+    <view class="section-title">其他设置</view>
+    <view class="setting-list">
+      <view class="setting-item">
+        <text class="setting-label">每人参与次数</text>
+        <text class="setting-value">{{formData.joinLimit}}次</text>
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">参与人数上限</text>
+        <text class="setting-value">{{formData.maxParticipants}}人</text>
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">活动可见性</text>
+        <text class="setting-value">{{formData.isPublic ? '公开' : '私密'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <button class="btn btn-outline action-btn" bindtap="goBack">返回修改</button>
+    <button class="btn btn-primary action-btn" bindtap="confirmPublish">确认发布</button>
+  </view>
+</view>

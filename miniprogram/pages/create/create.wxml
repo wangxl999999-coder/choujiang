@@ -1,0 +1,285 @@
+<view class="create-page">
+  <view class="step-tabs">
+    <view class="step-tab {{currentStep >= 1 ? 'active' : ''}}">
+      <view class="step-num">1</view>
+      <text>基本信息</text>
+    </view>
+    <view class="step-line {{currentStep >= 2 ? 'active' : ''}}"></view>
+    <view class="step-tab {{currentStep >= 2 ? 'active' : ''}}">
+      <view class="step-num">2</view>
+      <text>奖品设置</text>
+    </view>
+    <view class="step-line {{currentStep >= 3 ? 'active' : ''}}"></view>
+    <view class="step-tab {{currentStep >= 3 ? 'active' : ''}}">
+      <view class="step-num">3</view>
+      <text>规则设置</text>
+    </view>
+  </view>
+
+  <view class="step-content" wx:if="{{currentStep === 1}}">
+    <view class="form-section">
+      <view class="section-title">活动标题</view>
+      <input 
+        class="form-input" 
+        placeholder="请输入活动标题" 
+        value="{{formData.title}}"
+        bindinput="onInput"
+        data-field="title"
+        maxlength="30"
+      />
+      <view class="char-count">{{formData.title.length}}/30</view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">活动封面</view>
+      <view class="cover-upload" bindtap="uploadCover">
+        <image wx:if="{{formData.cover}}" src="{{formData.cover}}" mode="aspectFill" class="cover-image" />
+        <view wx:else class="upload-placeholder">
+          <text class="upload-icon">📷</text>
+          <text class="upload-text">上传封面图片</text>
+        </view>
+      </view>
+      <view class="form-tip">建议尺寸：750×400px，支持jpg、png格式</view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">抽奖类型</view>
+      <view class="type-grid">
+        <view 
+          class="type-item {{formData.type === item.value ? 'active' : ''}}" 
+          wx:for="{{lotteryTypes}}" 
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="selectType"
+        >
+          <text class="type-icon">{{item.icon}}</text>
+          <text class="type-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">活动简介</view>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请输入活动简介（选填）"
+        value="{{formData.description}}"
+        bindinput="onInput"
+        data-field="description"
+        maxlength="200"
+        auto-height
+      />
+    </view>
+  </view>
+
+  <view class="step-content" wx:if="{{currentStep === 2}}">
+    <view class="form-section">
+      <view class="section-title flex-between">
+        <text>奖品列表</text>
+        <text class="add-prize-btn" bindtap="addPrize">+ 添加奖品</text>
+      </view>
+      
+      <view class="prize-list">
+        <view class="prize-item" wx:for="{{formData.prizes}}" wx:key="id" wx:for-index="idx">
+          <view class="prize-header">
+            <text class="prize-level">奖项{{idx + 1}}</text>
+            <text class="delete-prize" bindtap="deletePrize" data-index="{{idx}}">删除</text>
+          </view>
+          <view class="prize-form">
+            <view class="prize-row">
+              <view class="prize-field">
+                <text class="field-label">奖品名称</text>
+                <input 
+                  class="field-input" 
+                  placeholder="如：iPhone 15"
+                  value="{{item.name}}"
+                  bindinput="onPrizeInput"
+                  data-index="{{idx}}"
+                  data-field="name"
+                />
+              </view>
+              <view class="prize-field">
+                <text class="field-label">数量</text>
+                <input 
+                  class="field-input" 
+                  type="number"
+                  placeholder="1"
+                  value="{{item.count}}"
+                  bindinput="onPrizeInput"
+                  data-index="{{idx}}"
+                  data-field="count"
+                />
+              </view>
+            </view>
+            <view class="prize-row">
+              <view class="prize-field">
+                <text class="field-label">中奖概率(%)</text>
+                <input 
+                  class="field-input" 
+                  type="digit"
+                  placeholder="0-100"
+                  value="{{item.probability}}"
+                  bindinput="onPrizeInput"
+                  data-index="{{idx}}"
+                  data-field="probability"
+                />
+              </view>
+              <view class="prize-field">
+                <text class="field-label">图标</text>
+                <view class="icon-picker">
+                  <text class="current-icon">{{item.icon}}</text>
+                  <picker mode="selector" range="{{prizeIcons}}" bindchange="onIconChange" data-index="{{idx}}">
+                    <text class="picker-arrow">▼</text>
+                  </picker>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty-prizes" wx:if="{{formData.prizes.length === 0}}">
+        <text>暂无奖品，请点击上方按钮添加</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="step-content" wx:if="{{currentStep === 3}}">
+    <view class="form-section">
+      <view class="section-title">参与方式</view>
+      <view class="join-type-list">
+        <view 
+          class="join-type-item {{formData.joinType === item.value ? 'active' : ''}}" 
+          wx:for="{{joinTypes}}" 
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="selectJoinType"
+        >
+          <text class="join-icon">{{item.icon}}</text>
+          <view class="join-info">
+            <text class="join-name">{{item.name}}</text>
+            <text class="join-desc">{{item.desc}}</text>
+          </view>
+          <view class="join-check {{formData.joinType === item.value ? 'checked' : ''}}">✓</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">参与限制</view>
+      <view class="limit-setting">
+        <view class="limit-item">
+          <text class="limit-label">每人可参与次数</text>
+          <view class="limit-input-wrap">
+            <text class="limit-btn" bindtap="changeLimit" data-field="joinLimit" data-type="minus">-</text>
+            <input 
+              class="limit-input" 
+              type="number" 
+              value="{{formData.joinLimit}}"
+              bindinput="onInput"
+              data-field="joinLimit"
+            />
+            <text class="limit-btn" bindtap="changeLimit" data-field="joinLimit" data-type="plus">+</text>
+          </view>
+        </view>
+        <view class="limit-item">
+          <text class="limit-label">活动总人数上限</text>
+          <view class="limit-input-wrap">
+            <text class="limit-btn" bindtap="changeLimit" data-field="maxParticipants" data-type="minus">-</text>
+            <input 
+              class="limit-input" 
+              type="number" 
+              value="{{formData.maxParticipants}}"
+              bindinput="onInput"
+              data-field="maxParticipants"
+            />
+            <text class="limit-btn" bindtap="changeLimit" data-field="maxParticipants" data-type="plus">+</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">抽奖时间</view>
+      <view class="time-setting">
+        <view class="time-item">
+          <text class="time-label">开始时间</text>
+          <picker 
+            mode="date" 
+            value="{{formData.startDate}}" 
+            bindchange="onDateChange"
+            data-field="startDate"
+          >
+            <view class="time-value">{{formData.startDate || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{formData.startTime}}" 
+            bindchange="onTimeChange"
+            data-field="startTime"
+          >
+            <view class="time-value">{{formData.startTime || '选择时间'}}</view>
+          </picker>
+        </view>
+        <view class="time-item">
+          <text class="time-label">结束时间</text>
+          <picker 
+            mode="date" 
+            value="{{formData.endDate}}" 
+            bindchange="onDateChange"
+            data-field="endDate"
+          >
+            <view class="time-value">{{formData.endDate || '选择日期'}}</view>
+          </picker>
+          <picker 
+            mode="time" 
+            value="{{formData.endTime}}" 
+            bindchange="onTimeChange"
+            data-field="endTime"
+          >
+            <view class="time-value">{{formData.endTime || '选择时间'}}</view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">活动可见性</view>
+      <view class="visibility-setting">
+        <view 
+          class="visibility-item {{formData.isPublic ? 'active' : ''}}"
+          bindtap="setVisibility"
+          data-value="{{true}}"
+        >
+          <text class="visibility-icon">🌐</text>
+          <text>公开</text>
+        </view>
+        <view 
+          class="visibility-item {{!formData.isPublic ? 'active' : ''}}"
+          bindtap="setVisibility"
+          data-value="{{false}}"
+        >
+          <text class="visibility-icon">🔒</text>
+          <text>私密</text>
+        </view>
+      </view>
+      <view class="form-tip">公开活动将在首页展示，私密活动仅通过分享链接访问</view>
+    </view>
+  </view>
+
+  <view class="step-footer">
+    <button 
+      class="btn btn-outline footer-btn" 
+      wx:if="{{currentStep > 1}}"
+      bindtap="prevStep"
+    >
+      上一步
+    </button>
+    <button 
+      class="btn btn-primary footer-btn"
+      bindtap="{{currentStep === 3 ? 'submitForm' : 'nextStep'}}"
+    >
+      {{currentStep === 3 ? '发布活动' : '下一步'}}
+    </button>
+  </view>
+</view>

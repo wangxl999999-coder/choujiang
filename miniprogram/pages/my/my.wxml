@@ -1,0 +1,94 @@
+<view class="my-page">
+  <view class="user-header">
+    <view class="user-info" wx:if="{{userInfo}}">
+      <image class="user-avatar" src="{{userInfo.avatar}}" mode="aspectFill" />
+      <view class="user-detail">
+        <view class="user-name">{{userInfo.nickname}}</view>
+        <view class="user-phone">{{userInfo.phone}}</view>
+      </view>
+      <text class="edit-btn" bindtap="editProfile">编辑</text>
+    </view>
+    <view class="user-login" wx:else bindtap="login">
+      <text class="login-icon">👤</text>
+      <text class="login-text">点击登录</text>
+    </view>
+    
+    <view class="user-stats">
+      <view class="stat-item">
+        <text class="stat-num">{{userInfo.lotteryCount || 0}}</text>
+        <text class="stat-label">参与抽奖</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{userInfo.winCount || 0}}</text>
+        <text class="stat-label">中奖次数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{userInfo.inviteCount || 0}}</text>
+        <text class="stat-label">邀请好友</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-group">
+      <view class="menu-item" bindtap="goToMyLottery">
+        <text class="menu-icon">🎫</text>
+        <text class="menu-text">我参与的</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToMyWinning">
+        <text class="menu-icon">🏆</text>
+        <text class="menu-text">我的中奖</text>
+        <text class="badge" wx:if="{{pendingWinCount > 0}}">{{pendingWinCount}}</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToMyCreated">
+        <text class="menu-icon">📝</text>
+        <text class="menu-text">我创建的</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-item" bindtap="goToAddress">
+        <text class="menu-icon">📍</text>
+        <text class="menu-text">收货地址</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToInvite">
+        <text class="menu-icon">🎁</text>
+        <text class="menu-text">邀请好友</text>
+        <text class="menu-hint">得抽奖次数</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="menu-group">
+      <view class="menu-item" bindtap="goToService">
+        <text class="menu-icon">💬</text>
+        <text class="menu-text">联系客服</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToFeedback">
+        <text class="menu-icon">📢</text>
+        <text class="menu-text">意见反馈</text>
+        <text class="menu-arrow">›</text>
+      </view>
+      <view class="menu-item" bindtap="goToSetting">
+        <text class="menu-icon">⚙️</text>
+        <text class="menu-text">设置</text>
+        <text class="menu-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="invite-banner" bindtap="goToInvite">
+    <view class="invite-content">
+      <text class="invite-title">邀请好友赚抽奖机会</text>
+      <text class="invite-desc">每邀请一位好友，双方各得1次抽奖机会</text>
+    </view>
+    <view class="invite-btn">去邀请</view>
+  </view>
+</view>

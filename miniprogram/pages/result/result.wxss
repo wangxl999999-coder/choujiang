@@ -1,0 +1,154 @@
+.result-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 60rpx;
+}
+
+.result-header {
+  text-align: center;
+  padding: 80rpx 40rpx 100rpx;
+  border-radius: 0 0 40rpx 40rpx;
+  margin-bottom: -60rpx;
+  position: relative;
+}
+
+.result-header.win {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+}
+
+.result-header.lose {
+  background: linear-gradient(135deg, #999 0%, #bbb 100%);
+}
+
+.result-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.result-title {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.result-subtitle {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.prize-card {
+  margin: 0 30rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 50rpx 40rpx;
+  text-align: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.prize-card .prize-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.prize-card .prize-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.prize-card .prize-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+
+.prize-code {
+  display: inline-flex;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+}
+
+.code-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 16rpx;
+}
+
+.code-value {
+  font-size: 28rpx;
+  color: #333;
+  font-family: monospace;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  margin-right: 20rpx;
+}
+
+.copy-btn {
+  padding: 8rpx 20rpx;
+  background: #ff6b6b;
+  color: #fff;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.action-section {
+  margin: 40rpx 30rpx;
+  text-align: center;
+}
+
+.action-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+}
+
+.action-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 50rpx;
+  margin: 0;
+}
+
+.btn.action-btn::after {
+  border: none;
+}
+
+.tips-section {
+  margin: 0 30rpx 40rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.tips-list {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 2;
+}
+
+.back-btn {
+  text-align: center;
+  font-size: 26rpx;
+  color: #999;
+  padding: 20rpx;
+}

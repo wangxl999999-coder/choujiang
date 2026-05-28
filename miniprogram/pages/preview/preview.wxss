@@ -1,0 +1,186 @@
+.preview-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx 30rpx 140rpx;
+}
+
+.preview-card {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.preview-cover {
+  width: 100%;
+  height: 360rpx;
+}
+
+.preview-info {
+  padding: 30rpx;
+}
+
+.preview-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.preview-type {
+  margin-bottom: 16rpx;
+}
+
+.type-tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.preview-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.info-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.prize-list {
+  margin-top: 10rpx;
+}
+
+.prize-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.prize-item:last-child {
+  border-bottom: none;
+}
+
+.prize-icon {
+  font-size: 48rpx;
+  margin-right: 20rpx;
+}
+
+.prize-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.prize-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.prize-count {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.prize-prob {
+  font-size: 24rpx;
+  color: #ff6b6b;
+}
+
+.join-info {
+  display: flex;
+  align-items: center;
+}
+
+.join-icon {
+  font-size: 60rpx;
+  margin-right: 20rpx;
+}
+
+.join-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.join-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.join-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.time-list,
+.setting-list {
+  margin-top: 10rpx;
+}
+
+.time-item,
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.time-item:last-child,
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.time-label,
+.setting-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.time-value,
+.setting-value {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.action-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  border-radius: 50rpx;
+  margin: 0;
+}
+
+.btn.action-btn::after {
+  border: none;
+}

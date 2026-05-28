@@ -1,0 +1,59 @@
+<view class="service-page">
+  <view class="service-header">
+    <view class="service-icon">💬</view>
+    <view class="service-title">客服中心</view>
+    <view class="service-desc">有任何问题请联系我们，我们将竭诚为您服务</view>
+  </view>
+
+  <view class="contact-section">
+    <view class="contact-item" bindtap="copyWechat">
+      <view class="contact-icon wechat">💚</view>
+      <view class="contact-info">
+        <view class="contact-name">微信客服</view>
+        <view class="contact-value">{{wechatId}}</view>
+      </view>
+      <view class="contact-action">复制</view>
+    </view>
+
+    <view class="contact-item" bindtap="copyPhone">
+      <view class="contact-icon phone">📞</view>
+      <view class="contact-info">
+        <view class="contact-name">客服电话</view>
+        <view class="contact-value">{{phoneNumber}}</view>
+      </view>
+      <view class="contact-action">复制</view>
+    </view>
+
+    <view class="contact-item" bindtap="copyEmail">
+      <view class="contact-icon email">📧</view>
+      <view class="contact-info">
+        <view class="contact-name">客服邮箱</view>
+        <view class="contact-value">{{email}}</view>
+      </view>
+      <view class="contact-action">复制</view>
+    </view>
+  </view>
+
+  <view class="faq-section">
+    <view class="section-title">常见问题</view>
+    <view class="faq-list">
+      <view class="faq-item" wx:for="{{faqList}}" wx:key="id" bindtap="toggleFaq" data-index="{{index}}">
+        <view class="faq-question">
+          <text class="question-text">{{item.question}}</text>
+          <text class="question-arrow {{item.open ? 'open' : ''}}">▼</text>
+        </view>
+        <view class="faq-answer {{item.open ? 'open' : ''}}">
+          {{item.answer}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="service-time">
+    <view class="time-icon">🕐</view>
+    <view class="time-text">
+      <text class="time-label">服务时间</text>
+      <text class="time-value">周一至周日 9:00-21:00</text>
+    </view>
+  </view>
+</view>

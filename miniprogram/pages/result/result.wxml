@@ -1,0 +1,45 @@
+<view class="result-page">
+  <view class="result-header {{isWin ? 'win' : 'lose'}}">
+    <view class="result-icon">{{isWin ? '🎉' : '😅'}}</view>
+    <view class="result-title">{{isWin ? '恭喜中奖！' : '很遗憾，未中奖'}}</view>
+    <view class="result-subtitle">{{isWin ? '运气爆棚，快去兑奖吧' : '下次一定！再试一次吧'}}</view>
+  </view>
+
+  <view class="prize-card" wx:if="{{isWin}}">
+    <view class="prize-icon">{{prizeInfo.icon}}</view>
+    <view class="prize-name">{{prizeInfo.name}}</view>
+    <view class="prize-desc">{{prizeInfo.desc}}</view>
+    <view class="prize-code">
+      <text class="code-label">兑奖码</text>
+      <text class="code-value">{{prizeCode}}</text>
+      <text class="copy-btn" bindtap="copyCode">复制</text>
+    </view>
+  </view>
+
+  <view class="action-section">
+    <view class="action-tip" wx:if="{{remainChances > 0}}">
+      剩余抽奖次数：{{remainChances}}次
+    </view>
+    <view class="action-btns">
+      <button class="btn btn-outline action-btn" bindtap="shareActivity">
+        <text>📤 分享活动</text>
+      </button>
+      <button class="btn btn-primary action-btn" bindtap="tryAgain" wx:if="{{remainChances > 0}}">
+        <text>再抽一次</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="tips-section">
+    <view class="tips-title">温馨提示</view>
+    <view class="tips-list">
+      <view class="tip-item">• 中奖后请在7天内联系客服兑奖</view>
+      <view class="tip-item">• 兑奖码是兑奖的唯一凭证，请妥善保管</view>
+      <view class="tip-item">• 邀请好友可获得额外抽奖机会</view>
+    </view>
+  </view>
+
+  <view class="back-btn" bindtap="goBack">
+    <text>← 返回活动详情</text>
+  </view>
+</view>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽奖助手 - 管理后台</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div id="loginPage" class="login-page">
+      <div class="login-container">
+        <h1>🎯 抽奖助手管理后台</h1>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>用户名</label>
+            <input type="text" id="username" placeholder="请输入用户名" value="admin">
+          </div>
+          <div class="form-group">
+            <label>密码</label>
+            <input type="password" id="password" placeholder="请输入密码" value="admin123">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">登录</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="adminPage" class="admin-page" style="display: none;">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>🎯 抽奖助手</h2>
+          <p>管理后台</p>
+        </div>
+        <nav class="sidebar-menu">
+          <div class="menu-item active" data-page="dashboard">
+            <span class="menu-icon">📊</span>
+            <span>数据概览</span>
+          </div>
+          <div class="menu-item" data-page="lotteries">
+            <span class="menu-icon">🎫</span>
+            <span>活动管理</span>
+          </div>
+          <div class="menu-item" data-page="statistics">
+            <span class="menu-icon">📈</span>
+            <span>数据统计</span>
+          </div>
+          <div class="menu-item" data-page="users">
+            <span class="menu-icon">👥</span>
+            <span>用户管理</span>
+          </div>
+          <div class="menu-item" data-page="verify">
+            <span class="menu-icon">✅</span>
+            <span>奖品核销</span>
+          </div>
+          <div class="menu-item" data-page="messages">
+            <span class="menu-icon">💬</span>
+            <span>消息推送</span>
+          </div>
+          <div class="menu-item" data-page="risk">
+            <span class="menu-icon">🛡️</span>
+            <span>风控管理</span>
+          </div>
+          <div class="menu-item" data-page="audit">
+            <span class="menu-icon">🔍</span>
+            <span>审核管理</span>
+          </div>
+          <div class="menu-item" data-page="posters">
+            <span class="menu-icon">🖼️</span>
+            <span>海报模板</span>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-header">
+          <div class="header-title" id="pageTitle">数据概览</div>
+          <div class="header-right">
+            <span class="admin-info">👤 管理员</span>
+            <button id="logoutBtn" class="btn btn-outline">退出登录</button>
+          </div>
+        </header>
+
+        <div class="content-area">
+          <div id="dashboardPage" class="page-content">
+            <div class="stats-cards">
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">🎫</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="totalLotteries">128</div>
+                  <div class="stat-label">活动总数</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">👥</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="totalUsers">12,580</div>
+                  <div class="stat-label">用户总数</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🎯</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="totalParticipations">156,420</div>
+                  <div class="stat-label">参与次数</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🏆</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="totalWins">3,256</div>
+                  <div class="stat-label">中奖次数</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="charts-row">
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>参与趋势</h3>
+                </div>
+                <canvas id="trendChart" height="300"></canvas>
+              </div>
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>来源分析</h3>
+                </div>
+                <canvas id="sourceChart" height="300"></canvas>
+              </div>
+            </div>
+
+            <div class="recent-section">
+              <div class="recent-card">
+                <div class="card-header">
+                  <h3>最新活动</h3>
+                  <a href="#" class="view-all" data-page="lotteries">查看全部 →</a>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>活动名称</th>
+                      <th>类型</th>
+                      <th>参与人数</th>
+                      <th>状态</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentLotteries">
+                  </tbody>
+                </table>
+              </div>
+              <div class="recent-card">
+                <div class="card-header">
+                  <h3>最新用户</h3>
+                  <a href="#" class="view-all" data-page="users">查看全部 →</a>
+                </div>
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>用户</th>
+                      <th>手机号</th>
+                      <th>注册时间</th>
+                      <th>参与次数</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentUsers">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="lotteriesPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <div class="action-left">
+                <input type="text" class="search-input" placeholder="搜索活动名称..." id="lotterySearch">
+                <select class="filter-select" id="lotteryStatusFilter">
+                  <option value="">全部状态</option>
+                  <option value="ongoing">进行中</option>
+                  <option value="upcoming">未开始</option>
+                  <option value="finished">已结束</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" id="createLotteryBtn">+ 创建活动</button>
+            </div>
+
+            <div class="table-card">
+              <table class="data-table full">
+                <thead>
+                  <tr>
+                    <th>活动ID</th>
+                    <th>封面</th>
+                    <th>活动名称</th>
+                    <th>类型</th>
+                    <th>参与人数</th>
+                    <th>中奖人数</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="lotteriesTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="statisticsPage" class="page-content" style="display: none;">
+            <div class="filter-bar">
+              <div class="date-range">
+                <label>时间范围：</label>
+                <input type="date" id="startDate" value="2024-01-01">
+                <span>至</span>
+                <input type="date" id="endDate" value="2024-12-31">
+                <button class="btn btn-primary btn-sm" id="queryStatsBtn">查询</button>
+              </div>
+            </div>
+
+            <div class="stats-cards">
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">📊</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="statTotalParticipations">156,420</div>
+                  <div class="stat-label">总参与人次</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📅</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="statAvgDaily">521</div>
+                  <div class="stat-label">日均参与</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📈</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="statGrowth">+23.5%</div>
+                  <div class="stat-label">环比增长</div>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🎁</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="statConversion">12.8%</div>
+                  <div class="stat-label">中奖率</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="charts-row">
+              <div class="chart-card full">
+                <div class="chart-header">
+                  <h3>参与趋势图</h3>
+                </div>
+                <canvas id="trendLineChart" height="300"></canvas>
+              </div>
+            </div>
+
+            <div class="charts-row">
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>用户来源分布</h3>
+                </div>
+                <canvas id="sourcePieChart" height="300"></canvas>
+              </div>
+              <div class="chart-card">
+                <div class="chart-header">
+                  <h3>活动类型分布</h3>
+                </div>
+                <canvas id="typePieChart" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div id="usersPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <div class="action-left">
+                <input type="text" class="search-input" placeholder="搜索用户昵称/手机号..." id="userSearch">
+              </div>
+              <button class="btn btn-primary">导出用户</button>
+            </div>
+
+            <div class="table-card">
+              <table class="data-table full">
+                <thead>
+                  <tr>
+                    <th>用户ID</th>
+                    <th>头像</th>
+                    <th>昵称</th>
+                    <th>手机号</th>
+                    <th>参与次数</th>
+                    <th>中奖次数</th>
+                    <th>邀请人数</th>
+                    <th>注册时间</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="verifyPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <div class="action-left">
+                <input type="text" class="search-input" placeholder="输入兑奖码..." id="verifyCode">
+                <button class="btn btn-primary" id="verifyBtn">核销</button>
+              </div>
+            </div>
+
+            <div class="verify-result" id="verifyResult" style="display: none;">
+              <div class="result-success">
+                <div class="result-icon">✅</div>
+                <h3>核销成功</h3>
+                <div class="result-info">
+                  <p><strong>奖品：</strong><span id="verifyPrize"></span></p>
+                  <p><strong>用户：</strong><span id="verifyUser"></span></p>
+                  <p><strong>活动：</strong><span id="verifyActivity"></span></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <div class="card-header">
+                <h3>核销记录</h3>
+              </div>
+              <table class="data-table full">
+                <thead>
+                  <tr>
+                    <th>兑奖码</th>
+                    <th>奖品名称</th>
+                    <th>用户</th>
+                    <th>活动名称</th>
+                    <th>核销时间</th>
+                    <th>操作人</th>
+                    <th>状态</th>
+                  </tr>
+                </thead>
+                <tbody id="verifyRecords">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="messagesPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <button class="btn btn-primary" id="createMessageBtn">+ 新建推送</button>
+            </div>
+
+            <div class="message-form" id="messageForm" style="display: none;">
+              <div class="form-card">
+                <h3>新建消息推送</h3>
+                <div class="form-group">
+                  <label>推送标题</label>
+                  <input type="text" placeholder="请输入推送标题" id="msgTitle">
+                </div>
+                <div class="form-group">
+                  <label>推送内容</label>
+                  <textarea placeholder="请输入推送内容" id="msgContent"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>推送对象</label>
+                  <select id="msgTarget">
+                    <option value="all">全部用户</option>
+                    <option value="active">活跃用户</option>
+                    <option value="new">新注册用户</option>
+                    <option value="custom">指定用户</option>
+                  </select>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-outline" id="cancelMessage">取消</button>
+                  <button class="btn btn-primary" id="sendMessage">立即发送</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <table class="data-table full">
+                <thead>
+                  <tr>
+                    <th>消息ID</th>
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>推送对象</th>
+                    <th>发送时间</th>
+                    <th>发送状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="messagesTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="riskPage" class="page-content" style="display: none;">
+            <div class="risk-settings">
+              <div class="setting-card">
+                <h3>抽奖频率限制</h3>
+                <div class="setting-item">
+                  <label>每人每日抽奖次数上限</label>
+                  <input type="number" value="10" class="setting-input">
+                  <span class="setting-unit">次</span>
+                </div>
+                <div class="setting-item">
+                  <label>单IP每日抽奖次数上限</label>
+                  <input type="number" value="50" class="setting-input">
+                  <span class="setting-unit">次</span>
+                </div>
+              </div>
+
+              <div class="setting-card">
+                <h3>中奖限制</h3>
+                <div class="setting-item">
+                  <label>每人每日中奖次数上限</label>
+                  <input type="number" value="3" class="setting-input">
+                  <span class="setting-unit">次</span>
+                </div>
+                <div class="setting-item">
+                  <label>每人每活动中奖次数上限</label>
+                  <input type="number" value="1" class="setting-input">
+                  <span class="setting-unit">次</span>
+                </div>
+              </div>
+
+              <div class="setting-card">
+                <h3>黑名单管理</h3>
+                <div class="blacklist-section">
+                  <input type="text" class="search-input" placeholder="输入手机号添加黑名单..." id="blacklistInput">
+                  <button class="btn btn-danger" id="addBlacklistBtn">添加</button>
+                </div>
+                <div class="table-card" style="margin-top: 20px;">
+                  <table class="data-table full">
+                    <thead>
+                      <tr>
+                        <th>用户ID</th>
+                        <th>手机号</th>
+                        <th>添加原因</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody id="blacklistTable">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="auditPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <div class="action-left">
+                <select class="filter-select" id="auditStatusFilter">
+                  <option value="">全部状态</option>
+                  <option value="pending">待审核</option>
+                  <option value="approved">已通过</option>
+                  <option value="rejected">已拒绝</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <table class="data-table full">
+                <thead>
+                  <tr>
+                    <th>活动ID</th>
+                    <th>活动名称</th>
+                    <th>创建者</th>
+                    <th>提交时间</th>
+                    <th>奖品价值</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="postersPage" class="page-content" style="display: none;">
+            <div class="page-actions">
+              <button class="btn btn-primary" id="createPosterBtn">+ 新建模板</button>
+            </div>
+
+            <div class="poster-grid">
+              <div class="poster-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="poster-preview">
+                  <div class="poster-title">默认模板1</div>
+                </div>
+                <div class="poster-actions">
+                  <button class="btn btn-sm btn-outline">预览</button>
+                  <button class="btn btn-sm btn-primary">使用</button>
+                </div>
+              </div>
+              <div class="poster-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="poster-preview">
+                  <div class="poster-title">默认模板2</div>
+                </div>
+                <div class="poster-actions">
+                  <button class="btn btn-sm btn-outline">预览</button>
+                  <button class="btn btn-sm btn-primary">使用</button>
+                </div>
+              </div>
+              <div class="poster-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="poster-preview">
+                  <div class="poster-title">默认模板3</div>
+                </div>
+                <div class="poster-actions">
+                  <button class="btn btn-sm btn-outline">预览</button>
+                  <button class="btn btn-sm btn-primary">使用</button>
+                </div>
+              </div>
+              <div class="poster-item add-poster" id="addPosterItem">
+                <div class="poster-add-icon">+</div>
+                <div class="poster-add-text">添加模板</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div id="modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalTitle">创建活动</h3>
+          <span class="modal-close" id="modalClose">×</span>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<view class="my-lottery-page">
+  <view class="status-tabs">
+    <view 
+      class="status-tab {{activeStatus === item.value ? 'active' : ''}}" 
+      wx:for="{{statusList}}" 
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="switchStatus"
+    >
+      {{item.label}}
+      <text class="tab-count" wx:if="{{item.count > 0}}">({{item.count}})</text>
+    </view>
+  </view>
+
+  <view class="lottery-list">
+    <view 
+      class="lottery-item" 
+      wx:for="{{filteredList}}" 
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goToDetail"
+    >
+      <image class="lottery-cover" src="{{item.cover}}" mode="aspectFill" />
+      <view class="lottery-info">
+        <view class="lottery-title text-ellipsis">{{item.title}}</view>
+        <view class="lottery-prize">
+          <text>🎁</text>
+          <text class="prize-name">{{item.prizeName}}</text>
+        </view>
+        <view class="lottery-meta">
+          <text class="join-time">参与时间：{{item.joinTime}}</text>
+        </view>
+        <view class="lottery-status">
+          <text class="status-tag status-{{item.status}}">
+            {{item.status === 'ongoing' ? '进行中' : item.status === 'upcoming' ? '未开始' : item.isWin ? '已中奖' : '未中奖'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+    <text class="empty-icon">🎫</text>
+    <text class="empty-text">暂无参与记录</text>
+    <button class="btn btn-primary empty-btn" bindtap="goToHome">去抽奖</button>
+  </view>
+</view>

@@ -1,0 +1,137 @@
+<view class="home-page">
+  <view class="search-section">
+    <view class="search-box">
+      <icon type="search" size="16" color="#999" />
+      <input 
+        class="search-input" 
+        placeholder="搜索抽奖活动" 
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+      />
+      <text wx:if="{{searchKeyword}}" class="clear-btn" bindtap="clearSearch">×</text>
+    </view>
+  </view>
+
+  <swiper 
+    class="banner-swiper" 
+    autoplay 
+    circular 
+    indicator-dots 
+    indicator-color="rgba(255,255,255,0.5)"
+    indicator-active-color="#fff"
+    interval="3000"
+    duration="500"
+  >
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="banner-image" src="{{item.image}}" mode="aspectFill" />
+      <view class="banner-title">{{item.title}}</view>
+    </swiper-item>
+  </swiper>
+
+  <view class="quick-entrance">
+    <view class="entrance-item" bindtap="goToMyLottery">
+      <view class="entrance-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <text>🎫</text>
+      </view>
+      <text class="entrance-text">我的抽奖</text>
+    </view>
+    <view class="entrance-item" bindtap="goToCreate">
+      <view class="entrance-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <text>➕</text>
+      </view>
+      <text class="entrance-text">创建抽奖</text>
+    </view>
+    <view class="entrance-item" bindtap="goToMyWinning">
+      <view class="entrance-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <text>🏆</text>
+      </view>
+      <text class="entrance-text">中奖记录</text>
+    </view>
+    <view class="entrance-item" bindtap="goToService">
+      <view class="entrance-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <text>💬</text>
+      </view>
+      <text class="entrance-text">联系客服</text>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <scroll-view class="filter-scroll" scroll-x show-scrollbar="{{false}}">
+      <view class="filter-list">
+        <view 
+          class="filter-item {{activeType === item.value ? 'active' : ''}}" 
+          wx:for="{{typeFilters}}" 
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="onTypeFilter"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </scroll-view>
+    <view class="status-tabs">
+      <view 
+        class="status-tab {{activeStatus === item.value ? 'active' : ''}}" 
+        wx:for="{{statusFilters}}" 
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onStatusFilter"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </view>
+
+  <view class="lottery-list">
+    <view 
+      class="lottery-card" 
+      wx:for="{{lotteryList}}" 
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goToLottery"
+    >
+      <view class="card-cover">
+        <image src="{{item.cover}}" mode="aspectFill" />
+        <view class="card-type-tag">{{item.typeName}}</view>
+        <view class="card-status-tag status-{{item.status}}">
+          {{item.status === 'ongoing' ? '进行中' : item.status === 'upcoming' ? '即将开始' : '已结束'}}
+        </view>
+      </view>
+      <view class="card-content">
+        <view class="card-title text-ellipsis-2">{{item.title}}</view>
+        <view class="card-prize">
+          <text class="prize-icon">🎁</text>
+          <text class="prize-name text-ellipsis">{{item.prizeName}}</text>
+        </view>
+        <view class="card-info">
+          <view class="info-item">
+            <text class="info-icon">👥</text>
+            <text class="info-text">{{item.participants}}人参与</text>
+          </view>
+          <view class="info-item">
+            <text class="info-icon">⏰</text>
+            <text class="info-text {{item.status === 'finished' ? 'finished' : ''}}">
+              {{item.remainTime}}
+            </text>
+          </view>
+        </view>
+        <view class="card-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.participants / item.maxParticipants * 100}}%"></view>
+          </view>
+          <text class="progress-text">{{item.participants}}/{{item.maxParticipants}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{lotteryList.length === 0 && !loading}}">
+    <image src="/images/empty.png" mode="aspectFit" />
+    <text>暂无抽奖活动</text>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

@@ -1,0 +1,57 @@
+<view class="my-winning-page">
+  <view class="status-tabs">
+    <view 
+      class="status-tab {{activeStatus === item.value ? 'active' : ''}}" 
+      wx:for="{{statusList}}" 
+      wx:key="value"
+      data-value="{{item.value}}"
+      bindtap="switchStatus"
+    >
+      {{item.label}}
+      <text class="tab-count" wx:if="{{item.count > 0}}">({{item.count}})</text>
+    </view>
+  </view>
+
+  <view class="winning-list">
+    <view class="winning-card" wx:for="{{filteredList}}" wx:key="id">
+      <view class="card-header">
+        <image class="winning-cover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="winning-info">
+          <view class="winning-title text-ellipsis">{{item.title}}</view>
+          <view class="winning-level">{{item.prizeLevel}}</view>
+        </view>
+        <view class="winning-status {{item.isUsed ? 'used' : 'pending'}}">
+          {{item.isUsed ? '已兑换' : '待兑换'}}
+        </view>
+      </view>
+      <view class="card-body">
+        <view class="prize-detail">
+          <text class="prize-icon">🎁</text>
+          <text class="prize-name">{{item.prizeName}}</text>
+        </view>
+        <view class="winning-code">
+          <text class="code-label">兑奖码：</text>
+          <text class="code-value">{{item.code}}</text>
+          <text class="copy-btn" bindtap="copyCode" data-code="{{item.code}}">复制</text>
+        </view>
+      </view>
+      <view class="card-footer">
+        <text class="win-time">中奖时间：{{item.winTime}}</text>
+        <button 
+          class="btn {{item.isUsed ? 'btn-outline' : 'btn-primary'}} action-btn" 
+          size="mini"
+          bindtap="handleAction"
+          data-item="{{item}}"
+        >
+          {{item.isUsed ? '查看详情' : '立即兑换'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{filteredList.length === 0}}">
+    <text class="empty-icon">🏆</text>
+    <text class="empty-text">暂无中奖记录</text>
+    <button class="btn btn-primary empty-btn" bindtap="goToHome">去抽奖</button>
+  </view>
+</view>

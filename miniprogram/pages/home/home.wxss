@@ -1,0 +1,308 @@
+.home-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ff6b6b 0%, #f5f5f5 30%);
+  padding-bottom: 40rpx;
+}
+
+.search-section {
+  padding: 20rpx 30rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 50rpx;
+  padding: 16rpx 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.search-box .search-input {
+  flex: 1;
+  margin-left: 16rpx;
+  font-size: 28rpx;
+}
+
+.search-box .clear-btn {
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 36rpx;
+  text-align: center;
+  background: #eee;
+  border-radius: 50%;
+  font-size: 32rpx;
+  color: #999;
+}
+
+.banner-swiper {
+  width: 690rpx;
+  height: 300rpx;
+  margin: 0 30rpx 20rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 16rpx;
+}
+
+.banner-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30rpx;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.quick-entrance {
+  display: flex;
+  justify-content: space-around;
+  padding: 30rpx;
+  background: #fff;
+  margin: 0 30rpx 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.entrance-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.entrance-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: 12rpx;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.entrance-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.filter-section {
+  background: #fff;
+  margin: 0 30rpx 20rpx;
+  border-radius: 16rpx;
+  padding: 20rpx 0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.filter-scroll {
+  white-space: nowrap;
+  padding: 0 10rpx;
+}
+
+.filter-list {
+  display: inline-flex;
+  padding: 0 20rpx;
+}
+
+.filter-item {
+  display: inline-block;
+  padding: 12rpx 30rpx;
+  margin: 0 10rpx;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.filter-item.active {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: #fff;
+}
+
+.status-tabs {
+  display: flex;
+  margin-top: 20rpx;
+  padding: 0 30rpx;
+}
+
+.status-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: #666;
+  border-bottom: 4rpx solid transparent;
+}
+
+.status-tab.active {
+  color: #ff6b6b;
+  border-bottom-color: #ff6b6b;
+  font-weight: 500;
+}
+
+.lottery-list {
+  padding: 0 30rpx;
+}
+
+.lottery-card {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.lottery-card:active {
+  transform: scale(0.98);
+}
+
+.card-cover {
+  position: relative;
+  width: 100%;
+  height: 300rpx;
+}
+
+.card-cover image {
+  width: 100%;
+  height: 100%;
+}
+
+.card-type-tag {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(255, 107, 107, 0.9);
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 20rpx;
+}
+
+.card-status-tag {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  padding: 8rpx 20rpx;
+  font-size: 22rpx;
+  border-radius: 20rpx;
+  color: #fff;
+}
+
+.card-status-tag.status-ongoing {
+  background: rgba(82, 196, 26, 0.9);
+}
+
+.card-status-tag.status-upcoming {
+  background: rgba(250, 173, 20, 0.9);
+}
+
+.card-status-tag.status-finished {
+  background: rgba(153, 153, 153, 0.9);
+}
+
+.card-content {
+  padding: 24rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+  margin-bottom: 16rpx;
+}
+
+.card-prize {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.prize-icon {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.prize-name {
+  flex: 1;
+  font-size: 26rpx;
+  color: #ff6b6b;
+  font-weight: 500;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.info-icon {
+  font-size: 24rpx;
+  margin-right: 6rpx;
+}
+
+.info-text.finished {
+  color: #999;
+}
+
+.card-progress {
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #f0f0f0;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-right: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b6b 0%, #ff8e8e 100%);
+  border-radius: 6rpx;
+  transition: width 0.3s;
+}
+
+.progress-text {
+  font-size: 22rpx;
+  color: #999;
+  white-space: nowrap;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+}
+
+.empty-state image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 26rpx;
+}
