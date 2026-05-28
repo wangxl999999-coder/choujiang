@@ -61,7 +61,10 @@ Page({
     util.showLoading()
     setTimeout(() => {
       util.hideLoading()
-      const lottery = mockLotteries.find(item => item.id == id) || mockLotteries[0]
+      const app = getApp()
+      const createdLotteries = app.globalData.createdLotteries || []
+      const allLotteries = [...createdLotteries, ...mockLotteries]
+      const lottery = allLotteries.find(item => item.id == id) || allLotteries[0]
       const prizes = this.preparePrizes(mockPrizes)
       
       this.setData({
@@ -73,6 +76,10 @@ Page({
         typeIcon: this.getTypeIcon(lottery.type),
         typeName: lottery.typeName
       })
+
+      if (lottery.type === 'wheel') {
+        setTimeout(() => this.drawWheel(), 150)
+      }
     }, 500)
   },
 
@@ -120,6 +127,100 @@ Page({
       oneclick: '🎯'
     }
     return icons[type] || '🎁'
+  },
+
+  drawWheel() {
+    const query = wx.createSelectorQuery()
+    query.select('#wheelCanvas')
+      .fields({ node: true, size: true })
+      .exec(res => {
+        if (!res || !res[0] || !res[0].node) {
+          setTimeout(() => this.drawWheel(), 200)
+          return
+        }
+
+        const canvas = res[0].node
+        const ctx = canvas.getContext('2d')
+        const sysInfo = wx.getSystemInfoSync()
+        const dpr = sysInfo.pixelRatio
+        const cssWidth = res[0].width
+        const cssHeight = res[0].height
+
+        canvas.width = cssWidth * dpr
+        canvas.height = cssHeight * dpr
+        ctx.scale(dpr, dpr)
+
+        const centerX = cssWidth / 2
+        const centerY = cssHeight / 2
+        const radius = Math.max(1, Math.min(centerX, centerY) - 6)
+
+        const prizes = this.data.prizes
+        if (!prizes || prizes.length === 0) return
+
+        const count = prizes.length
+        const arcAngle = (2 * Math.PI) / count
+        const segmentColors = ['#fff0f0', '#ffffff']
+
+        for (let i = 0; i < count; i++) {
+          const startAngle = -Math.PI / 2 + i * arcAngle
+          const endAngle = startAngle + arcAngle
+          const midAngle = startAngle + arcAngle / 2
+
+          ctx.beginPath()
+          ctx.moveTo(centerX, centerY)
+          ctx.arc(centerX, centerY, radius, startAngle, endAngle)
+          ctx.closePath()
+          ctx.fillStyle = segmentColors[i % 2]
+          ctx.fill()
+          ctx.strokeStyle = '#ffd0d0'
+          ctx.lineWidth = 1
+          ctx.stroke()
+
+          ctx.save()
+          ctx.beginPath()
+          ctx.moveTo(centerX, centerY)
+          ctx.arc(centerX, centerY, radius, startAngle, endAngle)
+          ctx.closePath()
+          ctx.clip()
+
+          ctx.translate(centerX, centerY)
+          ctx.rotate(midAngle)
+
+          const iconFontSize = Math.max(13, Math.floor(radius * 0.12))
+          ctx.font = `${iconFontSize}px sans-serif`
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          ctx.fillStyle = '#333'
+          ctx.fillText(prizes[i].icon, radius * 0.72, 0)
+
+          const nameFontSize = Math.max(10, Math.floor(radius * 0.08))
+          ctx.font = `${nameFontSize}px sans-serif`
+          const nameChars = prizes[i].name.split('')
+          const maxChars = Math.min(nameChars.length, Math.floor(radius * 0.4 / (nameFontSize * 1.15)))
+          const startR = radius * 0.56
+          for (let ci = 0; ci < maxChars; ci++) {
+            ctx.fillText(nameChars[ci], startR - ci * nameFontSize * 1.15, 0)
+          }
+
+          ctx.restore()
+        }
+
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI)
+        ctx.strokeStyle = '#ff6b6b'
+        ctx.lineWidth = 3
+        ctx.stroke()
+
+        for (let i = 0; i < count; i++) {
+          const angle = -Math.PI / 2 + i * arcAngle
+          const dotX = centerX + Math.cos(angle) * (radius - 10)
+          const dotY = centerY + Math.sin(angle) * (radius - 10)
+          ctx.beginPath()
+          ctx.arc(dotX, dotY, 3, 0, 2 * Math.PI)
+          ctx.fillStyle = '#ff6b6b'
+          ctx.fill()
+        }
+      })
   },
 
   startCountdown() {

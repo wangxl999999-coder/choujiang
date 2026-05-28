@@ -20,17 +20,7 @@
     <view class="wheel-container" wx:if="{{lotteryInfo.type === 'wheel'}}">
       <view class="wheel-wrapper">
         <view class="wheel" style="transform: rotate({{wheelRotation}}deg);">
-          <view 
-            class="wheel-segment" 
-            wx:for="{{prizes}}" 
-            wx:key="id"
-            style="transform: rotate({{item.angle}}deg); {{item.style}}"
-          >
-            <view class="segment-content" style="transform: rotate({{-item.textAngle}}deg);">
-              <text class="segment-icon">{{item.icon}}</text>
-              <text class="segment-name">{{item.name}}</text>
-            </view>
-          </view>
+          <canvas type="2d" id="wheelCanvas" class="wheel-canvas"></canvas>
           <view class="wheel-center">
             <view class="wheel-btn {{isSpinning ? 'disabled' : ''}}" bindtap="startLottery">
               <text>{{isSpinning ? '抽奖中' : '开始'}}</text>
